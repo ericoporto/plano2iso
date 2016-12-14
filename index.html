@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Keyboard Touch Gamepad</title>
+    <link rel="stylesheet" type="text/css" href="simple.css">
+    <script type="text/javascript">
+    function setpixelated(canvas){
+      var ctx = canvas.getContext('2d');
+      ctx['imageSmoothingEnabled'] = false;       /* standard */
+      ctx['mozImageSmoothingEnabled'] = false;    /* Firefox */
+      ctx['oImageSmoothingEnabled'] = false;      /* Opera */
+      ctx['webkitImageSmoothingEnabled'] = false; /* Safari */
+      ctx['msImageSmoothingEnabled'] = false;     /* IE */
+      canvas.style.imageRendering = 'optimizeSpeed';
+      canvas.style.imageRendering = '-moz-crisp-edges';
+      canvas.style.imageRendering = '-o-crisp-edges';
+      canvas.style.imageRendering = '-webkit-optimize-contrast';
+      canvas.style.imageRendering = 'optimize-contrast';
+      canvas.style.imageRendering = 'crisp-edges';
+      canvas.style.imageRendering = 'pixelated';
+    }
+    
+    var c = [];
+    var ctx = [];
+    
+    function draw(img, xx, yy){
+        var x = c.width / 2 +xx;
+        var y = c.height / 2 +yy;
+        var width = img.width;
+        var height = img.height;
+        
+        ctx.translate(x, y);
+        ctx.rotate(45 * Math.PI / 180)
+        ctx.drawImage(img, -width / 2, -height / 2, width, height);
+        ctx.rotate(-45 * Math.PI / 180)
+        ctx.translate(-x, -y);
+    }    
+    
+    function onbodyload(){
+        c = document.createElement('canvas');
+        setpixelated(c);
+        c.width = 400;
+        c.height = 400;
+        ctx = c.getContext('2d');
+        
+        var img = document.getElementById('bgimg')
+               
+        c.style.height = Math.floor(2*200) + 'px';
+        c.style.width = Math.floor(4*200) + 'px';
+        document.getElementById('placecanvas').appendChild(c);
+        
+        draw(img,0,0)
+    } 
+
+
+    </script>
+  </head>
+  <body onload='onbodyload()'>
+    <header>
+        <h1> castpixel idea</h1>
+        Testing planometric view to isometric view using javascript.
+    </header>
+
+  <img id="bgimg" src="bg.png"/>
+  <p>
+  using canvas style height resize to half and using context rotate and translate to modify the drawing.
+  </p>
+  
+  <div id='placecanvas'>
+  </div>
+
+  <footer>
+    <br>by Érico Vieira Porto 2016</br>
+  </footer>
+  </body>
+</html>
